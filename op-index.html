@@ -1,0 +1,93 @@
+
+<!-- saved from url=(0068)file://lsbk-fs01/27ASS2-20$/Downloads/opt_bestellanzahl%20index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>Optimale Bestellanzahl</title>
+
+    <script>
+        "use strict";
+
+        function fOptimaleMenge() {
+
+            var vBestellkostenProBestellung;
+            var vLagerkostenProDrucker;
+            var vJaehrlicheBestellmenge;
+
+            // Ergänze die fehlenden Variabalen
+            var vOptBestellanzahlProJahr;
+
+
+            vBestellkostenProBestellung = parseFloat(document.getElementById("idBestellkostenProBestellung").value);
+            vLagerkostenProDrucker = parseFloat(document.getElementById("idLagerkostenProDrucker").value);
+            vJaehrlicheBestellmenge = parseFloat(document.getElementById("idJaehrlicheBestellmenge").value);
+
+
+            // Optimale Bestellanzahl berechnen
+            vOptBestellanzahlProJahr = Math.sqrt(vJaehrlicheBestellmenge * vLagerkostenProDrucker / vBestellkostenProBestellung);
+
+
+            var vAusgabeHtml = "";
+
+            vAusgabeHtml = "";
+            vAusgabeHtml = "Die optimale Bestellanzahl liegt bei " + Math.round(vOptBestellanzahlProJahr) + " Bestellungen im Jahr.<br><br>";
+            vAusgabeHtml = vAusgabeHtml + "<table border=1>";
+            vAusgabeHtml = vAusgabeHtml + "<tr><th>Bestellanzahl im Jahr</th><th>Bestellmenge in Stk.</th><th>Bestellkosten in €</th><th>Lagerkosten in €</th><th>Gesamtkosten in €</th></tr>";
+
+
+            // Ergänze hier das Programm....
+
+            for (var i = 1; i <= 12; i++) {
+
+                var vBestellmenge = vJaehrlicheBestellmenge / i;
+
+                var vBestellkosten = vBestellkostenProBestellung * i;
+
+                var vLagerkosten = vLagerkostenProDrucker * vBestellmenge;
+
+                var vGesamtkosten = vBestellkosten + vLagerkosten;
+
+                if (i == Math.round(vOptBestellanzahlProJahr)) {
+                    vAusgabeHtml = vAusgabeHtml + "<tr style='background-color:lightgrey'>";
+                } else {
+                    vAusgabeHtml = vAusgabeHtml + "<tr>";
+                }
+
+                vAusgabeHtml = vAusgabeHtml + "<td>" + i + "</td>";
+                vAusgabeHtml = vAusgabeHtml + "<td>" + vBestellmenge.toFixed(2) + "</td>";
+                vAusgabeHtml = vAusgabeHtml + "<td>" + vBestellkosten.toFixed(2) + "</td>";
+                vAusgabeHtml = vAusgabeHtml + "<td>" + vLagerkosten.toFixed(2) + "</td>";
+                vAusgabeHtml = vAusgabeHtml + "<td>" + vGesamtkosten.toFixed(2) + "</td>";
+
+                vAusgabeHtml = vAusgabeHtml + "</tr>";
+            }
+
+
+            vAusgabeHtml = vAusgabeHtml + "</table>";
+
+            document.getElementById("idAusgabeHtml").innerHTML = vAusgabeHtml;
+
+        }
+
+    </script>
+</head>
+
+<body>
+    <h1>Optimale Bestellanzahl</h1>
+
+    Bestellkosten pro Bestellung:
+    <input id="idBestellkostenProBestellung" type="text" value="40"> €<br>
+
+    Durchschnittliche Lagerkosten pro Drucker:
+    <input id="idLagerkostenProDrucker" type="text" value="0.30"> €<br>
+
+    Jährliche Bestellmenge:
+    <input id="idJaehrlicheBestellmenge" type="text" value="1200"> Drucker<br><br>
+
+    <button onclick="fOptimaleMenge();">Analyse der Gesamtkosten</button><br><br>
+
+    <div id="idAusgabeHtml"></div>
+
+
+
+
+</body></html>
